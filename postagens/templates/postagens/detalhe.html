@@ -1,33 +1,52 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block titulo %} Post: {{ post.slug }}  {% endblock %}
+{% extends 'base.html' %} {% load static %}
+{% block titulo %}
+    Post: {{ post.slug }}
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/listar.css' %}">
+{% endblock %}
 
 {% block conteudo%}
 {% include 'includes/top.html' %}
-<section data-bs-version="5.1" class="content10 cid-tzVgp39K95" id="content10-1">
-
-    <div class="container">
-        <div class="row justify-content-center border border-ligth">
-            <div class="col-12">
-
-                <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-3">
-                    {{ post.titulo }}
-                </h6>
-            </div>
-            <div class="col-12">
-                <p class="mbr-text mbr-fonts-style display-9">
-                    Publicado em: {{ post.publicado }} por {{ post.autor }}
-                </p>
-                <p class="mbr-text mbr-fonts-style display-7">
-                    {{ post.corpo|linebreaks }}
-                </p>
-            </div>
-            <div class="mbr-section-btn align-center">
-                    <a class="btn btn-primary display-4" href="{% url 'enviarpost' post.id %}">Enviar...</a>
-            </div>
-        </div>
+<section
+  data-bs-version="5.1"
+  class="content10 cid-tzVgp39K95"
+  id="content10-1"
+>
+  <div class="container">
+    <div class="row justify-content-center border border-ligth">
+      <div class="col-12">
+        <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-3">
+          {{ post.titulo }}
+        </h6>
+      </div>
+      <div class="col-12">
+        <p class="mbr-text mbr-fonts-style display-9">
+          Publicado em: {{ post.publicado }} por {{ post.autor }}
+        </p>
+        <p class="mbr-text mbr-fonts-style display-7">
+          {{ post.corpo|linebreaks }}
+        </p>
+      </div>
+      <div class="mbr-section-btn align-center">
+        <a
+          class="btn btn-primary display-4"
+          href="{% url 'enviarpost' post.id %}"
+          >Enviar...</a
+        >
+      </div>
     </div>
+    <h2>Comentários</h2>
+    {% for comentario in post.comentarios.all %}
+    <div class="comentarios">
+      <p>
+        <strong><h5>{{ comentario.nome }}</h5></strong> email: {{ comentario.email }} disse:
+      </p>
+      <p>{{ comentario.texto }}</p>
+      <p><small>Comentado em: {{ comentario.criado }}</small></p>
+    </div>
+    {% endfor %}
+  </div>
 </section>
 
 {% endblock %}
