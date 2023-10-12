@@ -40,23 +40,19 @@ class Postagem(models.Model):
 
 
 class Comentario(models.Model):
-    postagem = models.ForeignKey(
-        Postagem, on_delete=models.CASCADE, related_name='comentarios')
-    publicados = ComentariosPublicados()
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=50)
     email = models.EmailField()
-    senha = models.CharField(max_length=100)
-    texto = models.TextField()
+    corpo = models.TextField()
     criado = models.DateTimeField(auto_now_add=True)
-    STATUS_CHOICES = (
-        ('pendente', 'Pendente'),
-        ('aprovado', 'Aprovado'),
-    )
-    status = models.CharField(
-        max_length=8, choices=STATUS_CHOICES, default='pendente')
+    atualizado = models.DateTimeField(auto_now=True)
+    ativo = models.BooleanField(default=True)
+    postagem = models.ForeignKey(Postagem, on_delete=models.CASCADE, related_name='post_coments')
 
     class Meta:
-        ordering = ['-criado']
+        verbose_name = "Comentário"
+        verbose_name_plural = "Comentários"
 
     def __str__(self):
-        return f'Comentário por {self.nome} em {self.postagem}'
+        return f'Comentário de: {self.nome}'
+
+

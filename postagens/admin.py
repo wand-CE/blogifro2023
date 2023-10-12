@@ -12,6 +12,7 @@ class PostagemAdmin(admin.ModelAdmin):
 
 @admin.register(Comentario)
 class ComentarioAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'email', 'postagem', 'criado', 'status')
-    list_filter = ('status', 'criado', 'postagem')
-    search_fields = ('nome', 'email', 'texto')
+    list_display = ('postagem', 'nome', 'email', 'criado', 'ativo')
+    list_editable = ('ativo',)
+    # ordering = ('postagem', 'ativo', 'criado')
+    # list_filter = ('postagem', 'ativo')
