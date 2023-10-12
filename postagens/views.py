@@ -101,10 +101,10 @@ class CadUsuarioView(CreateView):
         form.save()
         messages.success(self.request, 'Usuário Cadastrado!!!')
         return super().form_valid(form)
-    
+
     def form_invalid(self, form):
         messages.error(self.request, 'Não foi possível cadastrar!')
-        return super().form_valid(form)
+        return super().form_invalid(form)
 
 
 class LoginUserView(FormView):
@@ -122,6 +122,7 @@ class LoginUserView(FormView):
             return redirect('listarposts')
         messages.error(self.request, 'Usuário não existe')
         return redirect('loginuser')
+
 
 class LogoutUserView(LoginRequiredMixin, LogoutView):
     def get(self, request):
